@@ -1,0 +1,117 @@
+{
+	"version": 1,
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"title": "Температура",
+			"width": 1,
+			"row": {
+				"3": 1,
+				"4": 5
+			},
+			"col": {
+				"3": 1,
+				"4": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"value": [
+							"datasources[\"temp\"][\"value\"]"
+						]
+					}
+				}
+			]
+		},
+		{
+			"title": "Уровень темноты",
+			"width": 1,
+			"row": {
+				"4": 7
+			},
+			"col": {
+				"4": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"value": [
+							"datasources[\"Освещенность\"][\"value\"]"
+						]
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"4": 1
+			},
+			"col": {
+				"4": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "indicator",
+					"settings": {
+						"value": "datasources[\"Датчик движения\"][\"value\"]"
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"4": 1
+			},
+			"col": {
+				"4": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "sparkline",
+					"settings": {
+						"value": [
+							"datasources[\"Шум\"][\"value\"]"
+						]
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "temp",
+			"type": "temperature",
+			"settings": {}
+		},
+		{
+			"name": "Освещенность",
+			"type": "light",
+			"settings": {}
+		},
+		{
+			"name": "Шум",
+			"type": "sound",
+			"settings": {}
+		},
+		{
+			"name": "Датчик движения",
+			"type": "head",
+			"settings": {}
+		},
+		{
+			"name": "Шум",
+			"type": "sound",
+			"settings": {}
+		}
+	],
+	"columns": 4
+}
