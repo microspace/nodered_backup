@@ -1,0 +1,249 @@
+{
+	"version": 1,
+	"allow_edit": true,
+	"plugins": [],
+	"panes": [
+		{
+			"title": "Температура",
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": [
+							"datasources[\"Температура\"]"
+						],
+						"sparkline": true,
+						"animate": false,
+						"units": "С"
+					}
+				}
+			]
+		},
+		{
+			"title": "Давление",
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": [
+							"datasources[\"Давление\"]"
+						],
+						"sparkline": true,
+						"animate": false,
+						"units": "мм.рт.с."
+					}
+				}
+			]
+		},
+		{
+			"title": "Влажность",
+			"width": 1,
+			"row": {
+				"3": 1
+			},
+			"col": {
+				"3": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": [
+							"datasources[\"Влажность\"]"
+						],
+						"sparkline": true,
+						"animate": false,
+						"units": "%"
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 7
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "X",
+						"size": "regular",
+						"value": "datasources[\"ACCX\"]",
+						"sparkline": true,
+						"animate": false
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 7
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Y",
+						"size": "regular",
+						"value": "datasources[\"ACCY\"]",
+						"sparkline": true,
+						"animate": false
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 7
+			},
+			"col": {
+				"3": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"title": "Z",
+						"size": "regular",
+						"value": "datasources[\"ACCZ\"]",
+						"sparkline": true,
+						"animate": false
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 13
+			},
+			"col": {
+				"3": 1
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"tempa0\"]",
+						"animate": true
+					}
+				}
+			]
+		},
+		{
+			"width": 1,
+			"row": {
+				"3": 13
+			},
+			"col": {
+				"3": 2
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "text_widget",
+					"settings": {
+						"size": "regular",
+						"value": "datasources[\"light\"]",
+						"animate": true
+					}
+				}
+			]
+		}
+	],
+	"datasources": [
+		{
+			"name": "Температура",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.104:1880/red/ws/temperature"
+			}
+		},
+		{
+			"name": "Давление",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.101:1880/red/ws/pressure"
+			}
+		},
+		{
+			"name": "Влажность",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.101:1880/red/ws/humidity",
+				"name": "Влажность"
+			}
+		},
+		{
+			"name": "ACCX",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.101:1880/red/ws/acc_x",
+				"name": "ACCX"
+			}
+		},
+		{
+			"name": "ACCY",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.101:1880/red/ws/acc_y"
+			}
+		},
+		{
+			"name": "ACCZ",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.101:1880/red/ws/acc_z"
+			}
+		},
+		{
+			"name": "tempa0",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.101:1880/red/ws/tempa0"
+			}
+		},
+		{
+			"name": "light",
+			"type": "web_socket",
+			"settings": {
+				"ws_uri": "ws://192.168.0.101:1880/red/ws/light"
+			}
+		}
+	],
+	"columns": 3
+}
