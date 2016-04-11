@@ -16,11 +16,6 @@
     },
     {
         "type": "tab",
-        "id": "4b4ba707.3ecb58",
-        "label": "OnboardGPIO"
-    },
-    {
-        "type": "tab",
         "id": "c70a6eed.26e6b",
         "label": "MPU-6050"
     },
@@ -155,20 +150,6 @@
         "wholemsg": "false"
     },
     {
-        "id": "a8ec63e.660e5a",
-        "type": "websocket-listener",
-        "z": "4b4ba707.3ecb58",
-        "path": "/ws/tempa0",
-        "wholemsg": "false"
-    },
-    {
-        "id": "2c43111d.2a222e",
-        "type": "websocket-listener",
-        "z": "4b4ba707.3ecb58",
-        "path": "/ws/light",
-        "wholemsg": "false"
-    },
-    {
         "id": "cfc7ff8.34626",
         "type": "nodebot",
         "z": "",
@@ -192,6 +173,13 @@
         "uuid": "",
         "token": "",
         "sendUuid": ""
+    },
+    {
+        "id": "d4f433a9.5aea5",
+        "type": "websocket-listener",
+        "z": "b62a5ca.0957aa",
+        "path": "/ws/light",
+        "wholemsg": "false"
     },
     {
         "id": "2ac6cb36.d2cd54",
@@ -627,8 +615,8 @@
         "name": "process i2c",
         "func": "var data = msg.payload;\nvar int16 = function(high, low) {\n  var result = (high << 8) | low;\n  // if highest bit is on, it is negative\n  return result >> 15 ? ((result ^ 0xFFFF) + 1) * -1 : result;\n};\n\n\nmsg.payload = {\n    accelerometer : {\n        x: int16(data[0], data[1]),\n        y: int16(data[2], data[3]),\n        z: int16(data[4], data[5])\n    },\n    temperature : int16(data[6], data[7]),\n    gyro : {\n        x: int16(data[8], data[9]),\n        y: int16(data[10], data[11]),\n        z: int16(data[12], data[13])\n    }\n};\n\nreturn msg;",
         "outputs": 1,
-        "x": 710,
-        "y": 60,
+        "x": 650,
+        "y": 100,
         "wires": [
             []
         ]
@@ -639,12 +627,11 @@
         "z": "b62a5ca.0957aa",
         "name": "",
         "serial": "fe9056cf.0f07b8",
-        "x": 110,
-        "y": 220,
+        "x": 90,
+        "y": 280,
         "wires": [
             [
-                "117238aa.98cd07",
-                "b9b237af.64faa8"
+                "117238aa.98cd07"
             ]
         ]
     },
@@ -653,20 +640,27 @@
         "type": "function",
         "z": "b62a5ca.0957aa",
         "name": "parse json",
-        "func": "data = msg.payload;\n//msg.payload = data[\"pressure\"];\nvar pr = { payload: 0.75*data[\"pressure\"] };\nvar temp = { payload: data[\"temperature\"] };\nvar hum = { payload: data[\"humidity\"] };\nreturn [pr, temp, hum];",
-        "outputs": "3",
+        "func": "data = msg.payload;\n//msg.payload = data[\"pressure\"];\nvar pr = { payload: 0.75*data[\"pressure\"] };\nvar temp = { payload: data[\"temperature\"] };\nvar hum = { payload: data[\"humidity\"] };\nvar light = { payload: data[\"light\"] };\nreturn [pr, temp, hum, light];",
+        "outputs": "4",
         "noerr": 0,
-        "x": 390,
+        "x": 270,
         "y": 220,
         "wires": [
             [
-                "823b32e1.51bb7"
+                "823b32e1.51bb7",
+                "b23d04.042993"
             ],
             [
-                "e2a67817.1a1348"
+                "e2a67817.1a1348",
+                "f5e648a1.4cddf8"
             ],
             [
-                "4d1fe54c.724c7c"
+                "4d1fe54c.724c7c",
+                "3ff4261e.7406ea"
+            ],
+            [
+                "d7d6375e.5ac868",
+                "fbbe2c2d.8addc"
             ]
         ]
     },
@@ -675,7 +669,7 @@
         "type": "json",
         "z": "b62a5ca.0957aa",
         "name": "",
-        "x": 250,
+        "x": 110,
         "y": 220,
         "wires": [
             [
@@ -690,8 +684,8 @@
         "name": "pressure -> FB",
         "server": "93972422.a94f88",
         "client": "",
-        "x": 620,
-        "y": 160,
+        "x": 600,
+        "y": 120,
         "wires": []
     },
     {
@@ -701,8 +695,8 @@
         "name": "temp -> FB",
         "server": "3f925a2e.6d9996",
         "client": "",
-        "x": 610,
-        "y": 220,
+        "x": 590,
+        "y": 160,
         "wires": []
     },
     {
@@ -712,8 +706,8 @@
         "name": "humidity -> FB",
         "server": "36e5ee1d.9b0dc2",
         "client": "",
-        "x": 620,
-        "y": 280,
+        "x": 600,
+        "y": 240,
         "wires": []
     },
     {
@@ -819,56 +813,6 @@
             ],
             [
                 "16114e79.9add92"
-            ]
-        ]
-    },
-    {
-        "id": "de4f81d2.632b7",
-        "type": "websocket out",
-        "z": "4b4ba707.3ecb58",
-        "name": "temp -> FB",
-        "server": "a8ec63e.660e5a",
-        "client": "",
-        "x": 570,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "569f8d25.15db44",
-        "type": "websocket out",
-        "z": "4b4ba707.3ecb58",
-        "name": "light -> FB",
-        "server": "2c43111d.2a222e",
-        "client": "",
-        "x": 350,
-        "y": 240,
-        "wires": []
-    },
-    {
-        "id": "8b2fda3a.75e778",
-        "type": "debug",
-        "z": "4b4ba707.3ecb58",
-        "name": "",
-        "active": false,
-        "console": "false",
-        "complete": "false",
-        "x": 350,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "eadf25de.1a2f68",
-        "type": "mraa-gpio-ain",
-        "z": "4b4ba707.3ecb58",
-        "name": "Light",
-        "pin": "0",
-        "interval": "1000",
-        "x": 160,
-        "y": 240,
-        "wires": [
-            [
-                "569f8d25.15db44",
-                "8b2fda3a.75e778"
             ]
         ]
     },
@@ -993,8 +937,8 @@
         "type": "inject",
         "z": "77ab628f.c779cc",
         "name": "",
-        "topic": "{ \"n\": \"temp\", \"v\": 4}",
-        "payload": "",
+        "topic": "",
+        "payload": "{ \"n\": \"temp\", \"v\": 4}",
         "payloadType": "str",
         "repeat": "",
         "crontab": "",
@@ -1012,27 +956,164 @@
         "type": "udp out",
         "z": "77ab628f.c779cc",
         "name": "",
-        "addr": "",
+        "addr": "127.0.0.1",
         "iface": "",
         "port": "41234",
         "ipv": "udp4",
         "outport": "",
         "base64": false,
         "multicast": "false",
-        "x": 470,
+        "x": 420,
         "y": 240,
         "wires": []
     },
     {
-        "id": "b9b237af.64faa8",
-        "type": "debug",
+        "id": "d7d6375e.5ac868",
+        "type": "websocket out",
+        "z": "b62a5ca.0957aa",
+        "name": "light -> FB",
+        "server": "d4f433a9.5aea5",
+        "client": "",
+        "x": 590,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8fb4c1b1.2db0f",
+        "type": "comment",
+        "z": "247aba4c.db8546",
+        "name": "Не используется!!!",
+        "info": "Не используется!!!",
+        "x": 370,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "c61722ed.23036",
+        "type": "udp out",
         "z": "b62a5ca.0957aa",
         "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 340,
-        "y": 420,
+        "addr": "127.0.0.1",
+        "iface": "",
+        "port": "41234",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 640,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "f5e648a1.4cddf8",
+        "type": "function",
+        "z": "b62a5ca.0957aa",
+        "name": "temp",
+        "func": "temp = msg.payload;\nmsg.payload = '{ \"n\": \"temp\", \"v\": ' + temp + '}';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 80,
+        "wires": [
+            [
+                "c61722ed.23036"
+            ]
+        ]
+    },
+    {
+        "id": "b23d04.042993",
+        "type": "function",
+        "z": "b62a5ca.0957aa",
+        "name": "pressure1",
+        "func": "temp = msg.payload;\nmsg.payload = '{ \"n\": \"pressure1\", \"v\": ' + temp + '}';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 450,
+        "y": 40,
+        "wires": [
+            [
+                "c1198d78.92b7a"
+            ]
+        ]
+    },
+    {
+        "id": "c1198d78.92b7a",
+        "type": "udp out",
+        "z": "b62a5ca.0957aa",
+        "name": "",
+        "addr": "127.0.0.1",
+        "iface": "",
+        "port": "41234",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 640,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "3ff4261e.7406ea",
+        "type": "function",
+        "z": "b62a5ca.0957aa",
+        "name": "humidity1",
+        "func": "temp = msg.payload;\nmsg.payload = '{ \"n\": \"humidity1\", \"v\": ' + temp + '}';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 460,
+        "y": 360,
+        "wires": [
+            [
+                "4cc20046.4c8e1"
+            ]
+        ]
+    },
+    {
+        "id": "4cc20046.4c8e1",
+        "type": "udp out",
+        "z": "b62a5ca.0957aa",
+        "name": "",
+        "addr": "127.0.0.1",
+        "iface": "",
+        "port": "41234",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 640,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "fbbe2c2d.8addc",
+        "type": "function",
+        "z": "b62a5ca.0957aa",
+        "name": "light1",
+        "func": "temp = msg.payload;\nmsg.payload = '{ \"n\": \"light1\", \"v\": ' + temp + '}';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 430,
+        "y": 400,
+        "wires": [
+            [
+                "9ac0dfb6.8e2ae"
+            ]
+        ]
+    },
+    {
+        "id": "9ac0dfb6.8e2ae",
+        "type": "udp out",
+        "z": "b62a5ca.0957aa",
+        "name": "",
+        "addr": "127.0.0.1",
+        "iface": "",
+        "port": "41234",
+        "ipv": "udp4",
+        "outport": "",
+        "base64": false,
+        "multicast": "false",
+        "x": 640,
+        "y": 400,
         "wires": []
     }
 ]
