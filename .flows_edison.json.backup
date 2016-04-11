@@ -643,8 +643,7 @@
         "y": 220,
         "wires": [
             [
-                "117238aa.98cd07",
-                "b9b237af.64faa8"
+                "117238aa.98cd07"
             ]
         ]
     },
@@ -1021,18 +1020,6 @@
         "multicast": "false",
         "x": 470,
         "y": 240,
-        "wires": []
-    },
-    {
-        "id": "b9b237af.64faa8",
-        "type": "debug",
-        "z": "b62a5ca.0957aa",
-        "name": "",
-        "active": true,
-        "console": "false",
-        "complete": "false",
-        "x": 340,
-        "y": 420,
         "wires": []
     }
 ]
